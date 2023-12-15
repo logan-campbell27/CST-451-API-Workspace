@@ -1,0 +1,56 @@
+package models;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class Player {
+	
+	int PlayerID;
+	
+	String Name;
+	
+	Float PointsPerReception;
+	
+	String Position;
+
+	public String getPosition() {
+		return Position;
+	}
+
+	public void setPosition(String position) {
+		Position = position;
+	}
+
+	public Float getPointsPerReception() {
+		return PointsPerReception;
+	}
+
+	public void setPointsPerReception(Float pointsPerReception) {
+		PointsPerReception = pointsPerReception;
+	}
+
+	
+	
+	public String getName() {
+		return Name;
+	}
+
+	public void setName(String name) {
+		Name = name;
+	}
+
+	public int getPlayerID() {
+		return PlayerID;
+	}
+
+	public void setPlayerID(int playerID) {
+		PlayerID = playerID;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [PlayerID=" + PlayerID + ", Name=" + Name + ", PointsPerReception=" + PointsPerReception
+				+ ", Position=" + Position + "]";
+	}
+	
+	
+}

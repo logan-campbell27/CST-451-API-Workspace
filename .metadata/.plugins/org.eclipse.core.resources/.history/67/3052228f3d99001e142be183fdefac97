@@ -1,0 +1,31 @@
+package controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import models.Player;
+import service.FootballService;
+
+@RestController
+public class FootballController {
+	
+	private FootballService playerService;
+	
+	public FootballController(FootballService footballService) {
+		this.playerService = footballService;
+	}
+	
+	@GetMapping("/players")
+	public List<Player> getPlayers(){
+		System.out.println("Running API");
+		List<Player> FinalList = this.playerService.getPlayers();
+		System.out.println("Final list: "+FinalList.size());
+		for(Player p: FinalList) {
+			System.out.println(p);
+		}
+		return FinalList;
+	}
+}

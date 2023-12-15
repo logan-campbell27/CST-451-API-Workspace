@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="model.Player"/>
+    <fullyQualifiedTypeName name="controller.FootballController"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
+    <fullyQualifiedTypeName name="models.Player"/>
+    <fullyQualifiedTypeName name="service.FootballService"/>
+    <fullyQualifiedTypeName name="org.springframework.web.reactive.function.client.WebClient"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="reactor.core.publisher.Mono"/>
+    <fullyQualifiedTypeName name="reactor.core.publisher.Flux"/>
+    <fullyQualifiedTypeName name="org.springframework.http.codec.json.Jackson2JsonDecoder"/>
+    <fullyQualifiedTypeName name="com.fasterxml.jackson.databind.json.JsonMapper.Builder"/>
+    <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonProperty"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="java.time.Duration"/>
+    <fullyQualifiedTypeName name="java.util.Collections"/>
+    <fullyQualifiedTypeName name="org.springframework.boot.autoconfigure.SpringBootApplication"/>
+    <fullyQualifiedTypeName name="org.springframework.boot.SpringApplication"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.ComponentScan"/>
+    <fullyQualifiedTypeName name="org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+</qualifiedTypeNameHistroy>
