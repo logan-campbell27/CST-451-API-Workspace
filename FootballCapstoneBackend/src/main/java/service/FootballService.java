@@ -34,6 +34,7 @@ public class FootballService {
 		//Filter players down to only positions and required minimum point values
 		List<Player> FilteredPlayers = new ArrayList<Player>();
 		this.FilterPlayers(PlayerList, 100f).forEach(p -> FilteredPlayers.add(p));
+		System.out.println(FilteredPlayers.size()+" Players");
 		return FilteredPlayers;
 	}
 	
