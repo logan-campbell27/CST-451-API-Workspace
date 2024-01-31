@@ -1,16 +1,20 @@
 <template>
   <div id="app">
-    <PlayerList></PlayerList>
+    <Navigation></Navigation>
+    <PlayerTable></PlayerTable>
   </div>
 </template>
 
 <script>
 
-import PlayerList from "./components/PlayerList.vue";
+import Navigation from "./components/Navigation.vue";
+import PlayerTable from "./components/PlayerTable.vue";
+
 export default {
   name:"App",
   components: {
-    PlayerList
+    Navigation,
+    PlayerTable
   }
 };
 </script>
@@ -22,6 +26,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
