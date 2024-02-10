@@ -10,6 +10,7 @@
 import Navigation from "./components/Navigation.vue";
 import PlayerTable from "./components/PlayerTable.vue";
 
+
 export default {
   name:"App",
   components: {
