@@ -1,5 +1,29 @@
 <template>
 <div>
+    <div id="player-container">
+      <div class="card" v-for="player in comparedPlayers" :key="player.index">
+          <div class="content">
+              <h2 class="player-name">{{ player.Name }}</h2>
+              <p>Position: {{ player.Position }}</p>
+              <p>Team: {{ player.Team }}</p>
+              <p>PPR Points: {{ player.FantasyPointsPPR }}</p>
+              <p>Standard Points: {{ player.FantasyPoints }}</p>
+              <p v-if="player.Position === 'QB'">Completion Percentage: {{ player.PassingCompletionPercentage }}</p>
+              <p v-if="player.Position === 'QB' || !player.Position">Passing Yards: {{ player.PassingYards }}</p>
+              <p v-if="player.Position === 'QB' || !player.Position">Passing Touchdowns: {{ player.PassingTouchdowns }}</p>
+              <p v-if="player.Position === 'QB'">Interceptions: {{ player.PassingInterceptions }}</p>
+              <p v-if="player.Position === 'RB'">Rushing Attempts: {{ player.RushingAttempts }}</p>
+              <p v-if="player.Position === 'RB' || !player.Position">Rushing Yards: {{ player.RushingYards }}</p>
+              <p v-if="player.Position === 'RB' || !player.Position">Rushing Touchdowns: {{ player.RushingTouchdowns }}</p>
+              <p v-if="player.Position !== 'QB' && player.Position">Targets: {{ player.ReceivingTargets }}</p>
+              <p v-if="player.Position !== 'QB' && player.Position">Receptions: {{ player.Receptions }}</p>
+              <p v-if="player.Position !== 'QB' || !player.Position">Receiving Yards: {{ player.ReceivingYards }}</p>
+              <p v-if="player.Position !== 'QB' || !player.Position">Receiving Touchdowns: {{ player.ReceivingTouchdowns }}</p>
+              <p>Fumbles: {{ player.FumblesLost }}</p>
+              <button @click="DeselectPlayer(player.Name)">Deselect Player</button>
+          </div>
+      </div>
+    </div>
     <h2>Position:</h2>
     <select v-model="position">
       <option value="">Position</option>
@@ -45,42 +69,19 @@
       <option value="WAS">WAS</option>
     </select>
     <input type="text" v-model="SearchText" id="SearchPlayer" @input="filterPlayers()" placeholder="Search For Player">
-<div id="player-container" v-if="FirstPlayer === undefined && SecondPlayer === undefined">
-    <div class="card" v-for="player in filteredPlayers" :key="player.id">
-        <div class="content">
+    <div id="player-container">
+        <div class="card" v-for="player in filteredPlayers" :key="player.id">
+            <div class="content">
             <h2 class="player-name">{{ player.Name }}</h2>
             <p>Position: {{ player.Position }}</p>
             <p>Team: {{ player.Team }}</p>
             <p>PPR Points: {{ player.FantasyPointsPPR }}</p>
             <p>Standard Points: {{ player.FantasyPoints }}</p>
-            <button @click="SelectFirstPlayer(player.Name)">View More Information</button>
+            <button @click="SelectPlayer(player.Name)">View More Information</button>
         </div>
     </div>
 </div>
-<div class="compare" v-if="FirstPlayer !== undefined || SecondPlayer !== undefined">
-    <div class="card" id="FirstPlayerCard">
-        <div class="content">
-            <h2 class="player-name">{{ FirstPlayer.Name }}</h2>
-            <p>Position: {{ FirstPlayer.Position }}</p>
-            <p>Team: {{ FirstPlayer.Team }}</p>
-            <p>PPR Points: {{ FirstPlayer.FantasyPointsPPR }}</p>
-            <p>Standard Points: {{ FirstPlayer.FantasyPoints }}</p>
-            <p v-if="FirstPlayer.Position === 'QB'">Completion Percentage: {{ FirstPlayer.PassingCompletionPercentage }}</p>
-            <p v-if="FirstPlayer.Position === 'QB' || !FirstPlayer.Position">Passing Yards: {{ FirstPlayer.PassingYards }}</p>
-            <p v-if="FirstPlayer.Position === 'QB' || !FirstPlayer.Position">Passing Touchdowns: {{ FirstPlayer.PassingTouchdowns }}</p>
-            <p v-if="FirstPlayer.Position === 'QB'">Interceptions: {{ FirstPlayer.PassingInterceptions }}</p>
-            <p v-if="FirstPlayer.Position === 'RB'">Rushing Attempts: {{ FirstPlayer.RushingAttempts }}</p>
-            <p v-if="FirstPlayer.Position === 'RB' || !FirstPlayer.Position">Rushing Yards: {{ FirstPlayer.RushingYards }}</p>
-            <p v-if="FirstPlayer.Position === 'RB' || !FirstPlayer.Position">Rushing Touchdowns: {{ FirstPlayer.RushingTouchdowns }}</p>
-            <p v-if="FirstPlayer.Position !== 'QB' && FirstPlayer.Position">Targets: {{ FirstPlayer.ReceivingTargets }}</p>
-            <p v-if="FirstPlayer.Position !== 'QB' && FirstPlayer.Position">Receptions: {{ FirstPlayer.Receptions }}</p>
-            <p v-if="FirstPlayer.Position !== 'QB' || !FirstPlayer.Position">Receiving Yards: {{ FirstPlayer.ReceivingYards }}</p>
-            <p v-if="FirstPlayer.Position !== 'QB' || !FirstPlayer.Position">Receiving Touchdowns: {{ FirstPlayer.ReceivingTouchdowns }}</p>
-            <p>Fumbles: {{ FirstPlayer.FumblesLost }}</p>
-            <button @click="DeselectFirstPlayer()">Deselect Player</button>
-        </div>
-    </div>
-</div>
+
 </div>
 </template>
 <script>
@@ -94,8 +95,7 @@ export default{
         data(){
             return {
                 players:[],
-                FirstPlayer:undefined,
-                SecondPlayer:undefined,
+                comparedPlayers: [],
                 team: ref(''),
                 position: ref(''),
                 SearchText: ref('')
@@ -126,21 +126,21 @@ export default{
   },
         methods: {
             
-            SelectFirstPlayer(Name) {
+            SelectPlayer(Name) {
                 this.players.forEach((player) => {
-                    if (player.Name === Name) {
-                    this.FirstPlayer = player;
-                    console.log('Selected Player:', this.FirstPlayer.Name);
+                    if (player.Name === Name && this.comparedPlayers.length < 5) {
+                        this.comparedPlayers.push(player);
                     }
               });       
             },
-            DeselectFirstPlayer(){
-                if(this.SecondPlayer !== undefined){
-                    this.FirstPlayer = this.SecondPlayer;
-                }
-                else{
-                    this.FirstPlayer = undefined;
-                }
+            DeselectPlayer(Name){
+                let tempList = [];
+                this.comparedPlayers.forEach((player) =>{
+                    if(player.Name !== Name){
+                        tempList.push(player);
+                    }
+                })
+                this.comparedPlayers = tempList;
 
             }
         }
