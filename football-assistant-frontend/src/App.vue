@@ -1,7 +1,19 @@
 <template>
   <div id="app">
-    <Navigation></Navigation>
-    <PlayerTable></PlayerTable>
+    <nav>
+      <a @click="navigateTo('playertable')">All Players</a>
+      <a @click="navigateTo('compareplayer')">Compare Players</a>
+    </nav>
+
+
+
+    <div v-if="currentComponent === 'playertable'">      
+      <PlayerTable></PlayerTable>
+    </div>
+
+    <div v-if="currentComponent === 'compareplayer'">
+      <ComparePlayer></ComparePlayer>
+    </div>
   </div>
 </template>
 
@@ -9,13 +21,24 @@
 
 import Navigation from "./components/Navigation.vue";
 import PlayerTable from "./components/PlayerTable.vue";
-
+import ComparePlayer from "./components/ComparePlayer.vue";
 
 export default {
   name:"App",
   components: {
     Navigation,
-    PlayerTable
+    PlayerTable,
+    ComparePlayer
+  },
+  data(){
+    return {
+      currentComponent: 'playertable',
+  };
+  },
+  methods: {
+    navigateTo(component) {
+      this.currentComponent = component;
+    }
   }
 };
 </script>

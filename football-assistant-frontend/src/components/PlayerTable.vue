@@ -1,53 +1,54 @@
 <template>
-<div>
-            <h1>Player List</h1>
-            <div>Team: {{ team }}</div>
-            <div>Position: {{ position }}</div>
+  <div>
+    <h1>Player List</h1>
+    <div>Team: {{ team }}</div>
+    <div>Position: {{ position }}</div>
 
-            <select v-model="position">
-                <option value="">Position</option>
-                <option value="QB">QB</option>
-                <option value="RB">RB</option>
-                <option value="WR">WR</option>
-                <option value="TE">TE</option>
-            </select>
-            <select v-model="team">
-    <option value="">Team</option>
-    <option value="ARI">ARI</option>
-    <option value="ATL">ATL</option>
-    <option value="BAL">BAL</option>
-    <option value="BUF">BUF</option>
-    <option value="CAR">CAR</option>
-    <option value="CHI">CHI</option>
-    <option value="CIN">CIN</option>
-    <option value="CLE">CLE</option>
-    <option value="DAL">DAL</option>
-    <option value="DEN">DEN</option>
-    <option value="DET">DET</option>
-    <option value="GB">GB</option>
-    <option value="HOU">HOU</option>
-    <option value="IND">IND</option>
-    <option value="JAX">JAX</option>
-    <option value="KC">KC</option>
-    <option value="LAC">LAC</option>
-    <option value="LAR">LAR</option>
-    <option value="LV">LV</option>
-    <option value="MIA">MIA</option>
-    <option value="MIN">MIN</option>
-    <option value="NE">NE</option>
-    <option value="NO">NO</option>
-    <option value="NYG">NYG</option>
-    <option value="NYJ">NYJ</option>
-    <option value="PHI">PHI</option>
-    <option value="PIT">PIT</option>
-    <option value="SF">SF</option>
-    <option value="SEA">SEA</option>
-    <option value="TB">TB</option>
-    <option value="TEN">TEN</option>
-    <option value="WAS">WAS</option>
-</select>
+    <select v-model="position">
+      <option value="">Position</option>
+      <option value="QB">QB</option>
+      <option value="RB">RB</option>
+      <option value="WR">WR</option>
+      <option value="TE">TE</option>
+    </select>
+    <select v-model="team">
+      <option value="">Team</option>
+      <option value="ARI">ARI</option>
+      <option value="ATL">ATL</option>
+      <option value="BAL">BAL</option>
+      <option value="BUF">BUF</option>
+      <option value="CAR">CAR</option>
+      <option value="CHI">CHI</option>
+      <option value="CIN">CIN</option>
+      <option value="CLE">CLE</option>
+      <option value="DAL">DAL</option>
+      <option value="DEN">DEN</option>
+      <option value="DET">DET</option>
+      <option value="GB">GB</option>
+      <option value="HOU">HOU</option>
+      <option value="IND">IND</option>
+      <option value="JAX">JAX</option>
+      <option value="KC">KC</option>
+      <option value="LAC">LAC</option>
+      <option value="LAR">LAR</option>
+      <option value="LV">LV</option>
+      <option value="MIA">MIA</option>
+      <option value="MIN">MIN</option>
+      <option value="NE">NE</option>
+      <option value="NO">NO</option>
+      <option value="NYG">NYG</option>
+      <option value="NYJ">NYJ</option>
+      <option value="PHI">PHI</option>
+      <option value="PIT">PIT</option>
+      <option value="SF">SF</option>
+      <option value="SEA">SEA</option>
+      <option value="TB">TB</option>
+      <option value="TEN">TEN</option>
+      <option value="WAS">WAS</option>
+    </select>
+    <input type="text" v-model="SearchText" id="SearchPlayer" @input="filterPlayers()" placeholder="Search For Player">
 
-            <table id="players">
+    <table id="players">
       <tr>
         <th>Name</th>
         <th>Position</th>
@@ -62,7 +63,7 @@
         <th v-if="position === 'RB' || !position">Rushing Touchdowns</th>
         <th v-if="position !== 'QB' && position">Targets</th>
         <th v-if="position !== 'QB' && position">Receptions</th>
-        <th v-if="position !=='QB' || !position">Receiving Yards</th>
+        <th v-if="position !== 'QB' || !position">Receiving Yards</th>
         <th v-if="position !== 'QB' || !position">Receiving Touchdowns</th>
         <th>Fumbles</th>
       </tr>
@@ -83,34 +84,36 @@
         <td v-if="position !== 'QB' || !position">{{ player.ReceivingYards }}</td>
         <td v-if="position !== 'QB' || !position">{{ player.ReceivingTouchdowns }}</td>
         <td>{{ player.FumblesLost }}</td>
-
       </tr>
     </table>
-        </div>
-    </template>
+  </div>
+</template>
     
-    <script>
-    import { ref, onMounted} from 'vue';
-    import axios from 'axios';
-   
-    export default {
-    name: 'PlayerTable',
+<script>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import Player from './Player';
+
+export default {
+  name: 'PlayerTable',
 
   data() {
     return {
       players: undefined,
       team: ref(''),
       position: ref(''),
+      SearchText: ''
     };
   },
   computed: {
     filteredPlayers() {
       if (!this.players) return [];
-
       return this.players.filter((player) => {
         return (
           (player.Position === this.position || !this.position) &&
-          (player.Team === this.team || !this.team)
+          (player.Team === this.team || !this.team) &&
+          player.Name.toLowerCase().includes(this.SearchText)
+
         );
       });
     },
@@ -120,35 +123,53 @@
       .get('/api/players')
       .then((resp) => {
         console.warn(resp.data);
-        this.players = resp.data;
+        this.players = resp.data.map((playerData) => new Player(playerData));
       })
       .catch((error) => {
         console.error(error);
       });
   },
 };
-    </script>
+</script>
     
-    <style>
-        #players{
-            width: 80%;
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            color: black;
-            font-size: 12px;
-        }
-        #player:hover{
-            background: lightgrey;
-        }
-        table{
-            border-collapse: collapse;
-            width: 100%;
-        }
-        tr, th{
-            border: 2px solid rgb(0, 150, 244);
-            padding: 8px;
-        }
-    </style>
+<style>
+
+#players {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: Verdana, sans-serif;
+  color: black;
+  font-size: 12px;
+
+}
+table {
+  width: 80%;
+  border-collapse: collapse;
+}
+tr, th {
+  border: 2px solid rgb(0, 150, 244);
+
+}
+
+#players th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: rgb(0,150,244);
+  color: white;
+}
+#players td{
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+#player{
+background-color: lightgrey;
+}
+
+#player:hover {
+  background: grey;
+}
+</style>
     
