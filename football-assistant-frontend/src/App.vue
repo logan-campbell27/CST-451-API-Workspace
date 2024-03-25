@@ -5,8 +5,6 @@
       <a @click="navigateTo('compareplayer')">Compare Players</a>
     </nav>
 
-
-
     <div v-if="currentComponent === 'playertable'">      
       <PlayerTable></PlayerTable>
     </div>

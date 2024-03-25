@@ -106,19 +106,21 @@ export default {
     };
   },
   computed: {
+    // Will dynamically filter players as user selects filter options
     filteredPlayers() {
       if (!this.players) return [];
       return this.players.filter((player) => {
         return (
           (player.Position === this.position || !this.position) &&
           (player.Team === this.team || !this.team) &&
-          player.Name.toLowerCase().includes(this.SearchText)
+          player.Name.toLowerCase().includes(this.SearchText.toLowerCase())
 
         );
       });
     },
   },
   mounted() {
+    // Populating data from the API
     axios
       .get('/api/players')
       .then((resp) => {

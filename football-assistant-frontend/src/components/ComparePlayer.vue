@@ -102,18 +102,20 @@ export default{
             }
         },
         computed: {
+            // Dynamically filter players based on drop down selection
     filteredPlayers() {
       if (!this.players) return [];
       return this.players.filter((player) => {
         return (
           (player.Position === this.position || !this.position) &&
           (player.Team === this.team || !this.team) &&
-          player.Name.toLowerCase().includes(this.SearchText)
+          player.Name.toLowerCase().includes(this.SearchText.toLowerCase())
         );
       });
     },
   },
         mounted() {
+            //API call to populate data
     axios
       .get('/api/players')
       .then((resp) => {
@@ -125,7 +127,7 @@ export default{
       });
   },
         methods: {
-            
+            // Method to view details of a player by clicking select button
             SelectPlayer(Name) {
                 this.players.forEach((player) => {
                     if (player.Name === Name && this.comparedPlayers.length < 5) {
@@ -133,6 +135,7 @@ export default{
                     }
               });       
             },
+            // Method to deselect a player and remove them from the compare screen at the top
             DeselectPlayer(Name){
                 let tempList = [];
                 this.comparedPlayers.forEach((player) =>{
