@@ -47,6 +47,10 @@ To get started with our application, follow these steps:
 
 **API Documentation: https://fantasydata.com/api/api-documentation/nfl#**
 
+## Design Diagrams 
+
+**Diagrams here**
+
 ## Screenshots
 
 **Screenshots Here**
