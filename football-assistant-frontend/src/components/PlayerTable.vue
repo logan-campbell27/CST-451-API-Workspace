@@ -1,8 +1,6 @@
 <template>
   <div>
     <h1>Player List</h1>
-    <div>Team: {{ team }}</div>
-    <div>Position: {{ position }}</div>
 
     <select v-model="position">
       <option value="">Position</option>
@@ -45,6 +43,25 @@
       <option value="TB">TB</option>
       <option value="TEN">TEN</option>
       <option value="WAS">WAS</option>
+    </select>
+    <select v-model="sort" @change="sortPlayers">
+      <option value="">Sort By</option>
+      <option value="Name">Name</option>
+      <option value="FantasyPointsPPR">Points</option>
+      <option v-if="position === 'QB' || !position" value="PassingYards">Passing Yards</option>
+      <option v-if="position === 'QB'" value="PassingCompletionPercentage">Completion Percentage</option>
+      <option v-if="position !== 'QB' || !position" value="ReceivingYards">Receiving Yards</option>
+      <option v-if="position === 'RB' || !position" value="RushingYards">Rushing Yards</option>
+      <option v-if="position !== 'QB' || !position" value="ReceivingTouchdowns">Receiving Touchdowns</option>
+      <option v-if="position === 'RB' || !position" value="RushingTouchdowns">Rushing Touchdowns</option>
+      <option v-if="position === 'QB' || !position" value="PassingTouchdowns">Passing Touchdowns</option>
+      <option v-if="position !== 'QB'" value="Receptions">Receptions</option>
+      <option v-if="position !== 'QB'" value="ReceivingTargets">Targets</option>
+      <option v-if="position === 'RB'" value="RushingAttempts">Rushing Attempts</option>
+      <option v-if="position === 'QB' || !position" value="PassingInterceptions">Interceptions</option>
+      <option value="FumblesLost">Fumbles</option>
+
+
     </select>
     <input type="text" v-model="SearchText" id="SearchPlayer" @input="filterPlayers()" placeholder="Search For Player">
 
@@ -102,7 +119,8 @@ export default {
       players: undefined,
       team: ref(''),
       position: ref(''),
-      SearchText: ''
+      SearchText: '',
+      sort: ref('')
     };
   },
   computed: {
@@ -118,6 +136,20 @@ export default {
         );
       });
     },
+    sortPlayers(){
+      if (!this.players || !this.sort) return;
+
+this.players = this.players.sort((a, b) => {
+  if (this.sort === 'Name' || this.sort === "") {
+    return a.Name.localeCompare(b.Name);
+  } else {
+    return b[this.sort] - a[this.sort];
+  }
+});
+
+console.log(this.players);
+return this.players;
+  },
   },
   mounted() {
     // Populating data from the API
@@ -126,7 +158,10 @@ export default {
       .then((resp) => {
         console.warn(resp.data);
         this.players = resp.data.map((playerData) => new Player(playerData));
-      })
+        this.players = this.players.sort((a, b) => {
+       return a.Name.localeCompare(b.Name);
+      });
+    })
       .catch((error) => {
         console.error(error);
       });
