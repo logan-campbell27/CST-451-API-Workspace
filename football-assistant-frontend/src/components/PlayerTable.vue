@@ -136,13 +136,16 @@ export default {
         );
       });
     },
+    // This will sort players based on selected parameter
     sortPlayers(){
       if (!this.players || !this.sort) return;
 
 this.players = this.players.sort((a, b) => {
+  // Checks if it is sorted by name to make sure it does the proper algorithm
   if (this.sort === 'Name' || this.sort === "") {
     return a.Name.localeCompare(b.Name);
   } else {
+    //Sorts on any other attribute and its numberic value
     return b[this.sort] - a[this.sort];
   }
 });
@@ -158,6 +161,7 @@ return this.players;
       .then((resp) => {
         console.warn(resp.data);
         this.players = resp.data.map((playerData) => new Player(playerData));
+        // Sort the list alphabetically
         this.players = this.players.sort((a, b) => {
        return a.Name.localeCompare(b.Name);
       });
