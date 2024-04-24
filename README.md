@@ -54,5 +54,10 @@ To get started with our application, follow these steps:
 ## Screenshots
 
 **Screenshots Here**
+<img width="1336" alt="Screenshot 2024-04-24 at 2 30 07 PM" src="https://github.com/logan-campbell27/CST-451-API-Workspace/assets/89537361/e2393af3-d3c4-4da9-879b-655142a1d5a7">
+<img width="1366" alt="Screenshot 2024-04-24 at 2 29 46 PM" src="https://github.com/logan-campbell27/CST-451-API-Workspace/assets/89537361/1f6a7e74-0313-49a7-8eb5-e6adb8c54b05">
+<img width="1352" alt="Screenshot 2024-04-24 at 2 29 55 PM" src="https://github.com/logan-campbell27/CST-451-API-Workspace/assets/89537361/a3673ed3-dc9c-43af-a7c1-6ec48d5a2ff0">
+
+
 
 
