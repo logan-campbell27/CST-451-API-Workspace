@@ -13,7 +13,7 @@ To get started with our application, follow these steps:
 
 1. **Clone the Repository**: 
    ```bash
-   git clone https://github.com/your-username/CST-451-API-Workspace.git
+   git clone https://github.com/logan-campbell27/CST-451-API-Workspace.git
 2. **Install Dependencies**:
    ```bash
    cd CST-451-API-Workspace
