@@ -35,19 +35,17 @@ To get started with our application, follow these steps:
 **Frontend**:
 - HTML
 - CSS
-- JavaScript(Vue.js)
+- Typescript
+- Vue.js
 
 **Backend**:
 - Java(SpringBoot)
+- REST API
 
 **Data**:
 - FantasyPros API (3rd Party)
 
 **API Documentation: https://fantasydata.com/api/api-documentation/nfl#**
-
-## Design Diagrams 
-
-**Diagrams here**
 
 ## Screenshots
 **View Players Table**
